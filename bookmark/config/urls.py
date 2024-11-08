@@ -20,15 +20,6 @@ from django.urls import path
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
-def index(request):
-    return HttpResponse("<h1>Hello, world.</h1>")
-
-def book_list(request):
-    book_text = ''
-    for i in range(0, 10):
-        book_text += f'book {i}<br>'
-
-    return HttpResponse(book_text)
 
 movie_list = [
     {'title': '파묘', 'viewers': 11913725},
@@ -37,9 +28,33 @@ movie_list = [
     {'title': '베테랑2', 'viewers': 7522494},
 ]
 
+books = [
+    {'title': '마흔에 읽는 쇼펜하우어', 'author': '강용수'},
+    {'title': '나는 메트로 폴리탄 미술관의 경비원입니다', 'author': '패트릭 브링리'},
+    {'title': '불변의 법칙', 'author': '모건 하우절'},
+    {'title': '세이노의 가르침', 'author': '세이노(Sayno)'},
+    {'title': '모순', 'author': '양귀자'},
+]
+
+def index(request):
+    return HttpResponse("<h1>Hello, world.</h1>")
+
+def book_list(request):
+    # book_text = ''
+    # for i in range(0, 10):
+    #     book_text += f'book {i}<br>'
+    #
+    # return HttpResponse(book_text)
+
+    return render(request,'books.html', {'books': books})
+
 def book(request, num):
-    book_text = f'book {num}번 페이지입니다.'
-    return HttpResponse(book_text)
+    # book_text = f'book {num}번 페이지입니다.'
+    # return HttpResponse(book_text)
+
+    if num > len(books):
+        raise Http404
+    return render(request, 'book.html', {'book': books[num]})
 
 def language(request, lang):
     return HttpResponse(f'<h1>{lang} 언어 페이지입니다.</h1>')
@@ -59,8 +74,7 @@ def movie_detail(request, movie_id):
     if movie_id==0 or movie_id > len(movie_list):
         raise Http404
     movie = movie_list[movie_id-1]
-    response_text = f'<h1>{movie["title"]}</h1> <p>관객 수 : {movie["viewers"]}</p>'
-    return HttpResponse(response_text)
+    return render(request, 'movie.html', {'movie' : movie})
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index, name="index"),
