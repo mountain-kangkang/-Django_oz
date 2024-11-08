@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse, Http404
+from django.shortcuts import render
 
 def index(request):
     return HttpResponse("<h1>Hello, world.</h1>")
@@ -47,11 +48,12 @@ def python(request):
     return HttpResponse('python 페이지 입니다.')
 
 def movies(request):
-    movie_titles = [
-        f'<a href="/movie/{index}/">{movie['title']}</a><br>'
-        for index, movie in enumerate(movie_list, start=1)
-    ]
-    return HttpResponse(movie_titles)
+    # movie_titles = [
+    #     f'<a href="/movie/{index}/">{movie['title']}</a><br>'
+    #     for index, movie in enumerate(movie_list, start=1)
+    # ]
+    # return HttpResponse(movie_titles)
+    return render(request, 'movies.html', {'movie_list' : movie_list})
 
 def movie_detail(request, movie_id):
     if movie_id==0 or movie_id > len(movie_list):

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+</head>
+<body>
+    {%  for movie in movie_list %}
+        {% if forloop.counter <= 3 %}
+            {{ forloop.counter }}위 : <a href="/movie/{{ forloop.counter }}">{{ movie.title }}</a><br>
+        {% endif %}
+        <!-- forloop.counter0 을 쓰면 0부터 카운터함
+            장고 템플릿 문법에서는  forloop.counter0 + 1  을 지원하지 않음
+            forloop.counter | add:5 or forloop.counter | add:-5
+            이런식으로 사용해야함
+         -->
+    {% endfor %}
+</body>
+</html>
