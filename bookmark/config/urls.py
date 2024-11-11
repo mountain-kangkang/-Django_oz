@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
+from bookmark import views
 
 
 movie_list = [
@@ -96,13 +97,15 @@ def gugu(request, num):
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index, name="index"),
-    path("book_list/", book_list, name="book_list"),
-    path("book_list/<int:num>/", book, name="book"),
-    path("language/python/", python),       # 얘는 language route 뒤에 호출되면 language 화면에서 <h1>태그로 호출되고 무시된다
-    path("language/<str:lang>/", language, name="language"),    # 그래서 보통 str로 인자값을 넣진 않음
-    path("movie/", movies, name="movies"),
-    path("movie/<int:movie_id>/", movie_detail),
-    path("gugudan/", gugudans),
-    path("gugudan/<int:num>/", gugudan),
-    path("gugu/<int:num>/", gugu),
+    # path("book_list/", book_list, name="book_list"),
+    # path("book_list/<int:num>/", book, name="book"),
+    # path("language/python/", python),       # 얘는 language route 뒤에 호출되면 language 화면에서 <h1>태그로 호출되고 무시된다
+    # path("language/<str:lang>/", language, name="language"),    # 그래서 보통 str로 인자값을 넣진 않음
+    # path("movie/", movies, name="movies"),
+    # path("movie/<int:movie_id>/", movie_detail),
+    # path("gugudan/", gugudans),
+    # path("gugudan/<int:num>/", gugudan),
+    # path("gugu/<int:num>/", gugu),
+    path("bookmark/", views.bookmark_list),
+    path("bookmark/<int:number>/", views.bookmark_detail, name="bookmark_detail"),
 ]
