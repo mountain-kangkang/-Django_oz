@@ -36,6 +36,8 @@ books = [
     {'title': '모순', 'author': '양귀자'},
 ]
 
+gugus = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 def index(request):
     return HttpResponse("<h1>Hello, world.</h1>")
 
@@ -75,6 +77,13 @@ def movie_detail(request, movie_id):
         raise Http404
     movie = movie_list[movie_id-1]
     return render(request, 'movie.html', {'movie' : movie})
+
+def gugudan(request):
+    return render(request, 'gugus.html', {'gugus' : gugus})
+
+def gugu(request, num):
+    return render(request, 'gugu.html', {'num' : num})
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index, name="index"),
@@ -84,4 +93,6 @@ urlpatterns = [
     path("language/<str:lang>/", language, name="language"),    # 그래서 보통 str로 인자값을 넣진 않음
     path("movie/", movies, name="movies"),
     path("movie/<int:movie_id>/", movie_detail),
+    path("gugudan/", gugudan),
+    path("gugudan/<int:num>", gugu),
 ]
