@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 movie_list = [
@@ -78,11 +78,20 @@ def movie_detail(request, movie_id):
     movie = movie_list[movie_id-1]
     return render(request, 'movie.html', {'movie' : movie})
 
-def gugudan(request):
-    return render(request, 'gugus.html', {'gugus' : gugus})
+def gugudans(request):
+    return render(request, 'gugudans.html', {'gugus' : gugus})
+
+def gugudan(request, num):
+    return render(request, 'gugudan.html', {'num' : num})
 
 def gugu(request, num):
-    return render(request, 'gugu.html', {'num' : num})
+    if num < 2:
+        return redirect('/gugu/2/')
+    context = {
+        'num': num,
+        'results': [num*i for i in range(1, 10)],
+    }
+    return render(request, 'gugu.html', context)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -93,6 +102,7 @@ urlpatterns = [
     path("language/<str:lang>/", language, name="language"),    # 그래서 보통 str로 인자값을 넣진 않음
     path("movie/", movies, name="movies"),
     path("movie/<int:movie_id>/", movie_detail),
-    path("gugudan/", gugudan),
-    path("gugudan/<int:num>", gugu),
+    path("gugudan/", gugudans),
+    path("gugudan/<int:num>/", gugudan),
+    path("gugu/<int:num>/", gugu),
 ]
