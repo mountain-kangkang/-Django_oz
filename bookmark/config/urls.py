@@ -107,5 +107,5 @@ urlpatterns = [
     # path("gugudan/<int:num>/", gugudan),
     # path("gugu/<int:num>/", gugu),
     path("bookmark/", views.bookmark_list),
-    path("bookmark/<int:number>/", views.bookmark_detail, name="bookmark_detail"),
+    path("bookmark/<int:pk>/", views.bookmark_detail, name="bookmark_detail"),
 ]
