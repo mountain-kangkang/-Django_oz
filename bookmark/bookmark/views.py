@@ -5,7 +5,7 @@ from bookmark.models import Bookmark
 
 
 def bookmark_list(request):
-    bookmarks = Bookmark.objects.all()
+    bookmarks = Bookmark.objects.filter(id__gte=50)
     # SELECT * FROM bookmark
 
     context = {'bookmarks': bookmarks}
