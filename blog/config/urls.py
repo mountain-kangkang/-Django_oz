@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from blog.views import blog_list, blog_detail, blog_create
+from blog.views import blog_list, blog_detail, blog_create, blog_update
 from member.views import sign_up, login
 
 urlpatterns = [
@@ -25,6 +25,7 @@ urlpatterns = [
     path("", blog_list, name="blog_list"),
     path("<int:pk>/", blog_detail, name="blog_detail"),
     path("create/", blog_create, name="blog_create"),
+    path("<int:pk>/update/", blog_update, name="blog_update"),
 
     # auth
     path("accounts/", include("django.contrib.auth.urls")),
