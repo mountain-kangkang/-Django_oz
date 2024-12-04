@@ -12,6 +12,10 @@ from blog.models import Blog
 def blog_list(request):
     blogs = Blog.objects.all().order_by('-created_at')
 
+    q = request.GET.get('q')
+    if q:
+        blogs = blogs.filter(title__icontains=q)
+
     paginator = Paginator(blogs, 10)
     page = request.GET.get('page')
     page_obj = paginator.get_page(page)
