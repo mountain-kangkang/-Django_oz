@@ -7,6 +7,10 @@
     {% if request.user == blog.author %}
         <div style="text-align: right">
             <a href="{% url 'blog_update' blog.pk %}">update</a>
+            <form action="{% url 'blog_delete' blog.pk%}" method="POST" style="display: inline">
+                {% csrf_token %}
+                <button>delete</button>
+            </form>
         </div>
     {% endif %}
     <hr>
