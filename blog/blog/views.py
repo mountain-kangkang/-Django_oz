@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
@@ -14,7 +15,10 @@ def blog_list(request):
 
     q = request.GET.get('q')
     if q:
-        blogs = blogs.filter(title__icontains=q)
+        blogs = blogs.filter(
+            Q(title__icontains=q) |
+            Q(content__icontains=q)
+        )
 
     paginator = Paginator(blogs, 10)
     page = request.GET.get('page')
